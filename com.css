@@ -1,0 +1,58 @@
+:root {
+    --violet-primary: #6D28D9;
+    --violet-light: #8B5CF6;
+    --dark: #1F2937;
+    --light-bg: #F9FAFB;
+    --white: #FFFFFF;
+    --border: #E5E7EB;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+body { background: var(--light-bg); color: var(--dark); overflow-x: hidden; }
+
+.navbar { background: var(--white); padding: 15px 5%; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
+.main-header { display: flex; flex-direction: column; gap: 15px; }
+.top-row { display: flex; justify-content: space-between; align-items: center; }
+
+.logo { font-size: 2rem; font-weight: 800; color: var(--violet-primary); flex: 1; }
+.logo span { background: var(--violet-primary); color: white; padding: 2px 8px; border-radius: 6px; margin-left: 4px; }
+
+.search-bar { display: flex; background: #F3F4F6; border-radius: 12px; padding: 5px 15px; flex: 2; max-width: 500px; }
+.search-bar input { flex: 1; border: none; background: transparent; padding: 10px; outline: none; }
+
+.auth-buttons { flex: 1; display: flex; justify-content: flex-end; gap: 15px; }
+.signup-btn { background: var(--violet-primary); color: white; padding: 8px 18px; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; }
+
+.wide-cart { width: 260px; background: var(--violet-primary); color: white; padding: 12px 20px; border-radius: 10px; border: none; display: flex; justify-content: space-between; cursor: pointer; align-items: center; }
+.badge { position: absolute; top: -8px; right: -10px; background: #EF4444; color: white; font-size: 0.7rem; padding: 2px 6px; border-radius: 50%; border: 2px solid white; }
+
+.main-layout { display: flex; padding: 30px 5%; gap: 30px; }
+.products-grid { flex: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; }
+.right-sidebar { width: 260px; flex-shrink: 0; }
+.filter-card { background: white; padding: 20px; border-radius: 15px; box-shadow: var(--shadow); position: sticky; top: 160px; }
+
+.card { background: white; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); transition: 0.3s; }
+.card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+.card img { width: 100%; height: 200px; object-fit: cover; }
+.card-content { padding: 15px; }
+.add-btn { width: 100%; padding: 10px; background: var(--violet-primary); color: white; border: none; border-radius: 6px; cursor: pointer; margin-top: 10px; }
+
+.sidebar { position: fixed; right: -400px; top: 0; width: 380px; height: 100%; background: white; box-shadow: -5px 0 15px rgba(0,0,0,0.1); transition: 0.4s ease; z-index: 3000; display: flex; flex-direction: column; padding: 25px; }
+.sidebar.active { right: 0; }
+
+.modal { display: none; position: fixed; z-index: 4000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); }
+.modal-content { background: white; width: 90%; max-width: 400px; margin: 10% auto; padding: 30px; border-radius: 20px; position: relative; }
+.close { position: absolute; right: 20px; top: 15px; font-size: 1.5rem; cursor: pointer; }
+
+.input-group input { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; }
+.auth-submit-btn { width: 100%; padding: 12px; background: var(--violet-primary); color: white; border: none; border-radius: 8px; cursor: pointer; }
+
+.tracking-visual { display: flex; justify-content: space-between; margin-top: 30px; }
+.step { flex: 1; text-align: center; font-size: 0.7rem; color: #999; }
+.step.active { color: var(--violet-primary); font-weight: bold; }
+.step::before { content: ''; width: 12px; height: 12px; background: #ddd; border-radius: 50%; display: block; margin: 0 auto 5px; }
+.step.active::before { background: var(--violet-primary); }
+
+.tab-content { display: none; padding-top: 20px; }
+.tab-content.show { display: block; }

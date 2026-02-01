@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlgoRythms | Premium E-commerce</title>
+    <link rel="stylesheet" href="com.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container main-header">
+            <div class="top-row">
+                <div class="logo-wrapper">
+                    <h1 class="logo" onclick="showSection('products')" style="cursor:pointer">Algo<span>Rythms</span></h1>
+                </div>
+                <div class="search-section">
+                    <div class="search-bar">
+                        <input type="text" id="product-search" placeholder="Search products..." onkeyup="applyFilters()">
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+                <div class="auth-buttons">
+                    <button class="login-link" onclick="openLogin()">Login</button>
+                    <button class="signup-btn" onclick="openSignup()">Sign Up</button>
+                    <button class="admin-btn" onclick="showSection('admin')" style="background:none; border:none; color:var(--violet-primary); cursor:pointer;"><i class="fas fa-user-shield"></i></button>
+                </div>
+            </div>
+            <div class="bottom-row">
+                <button class="cart-toggle-btn wide-cart" onclick="toggleCart()">
+                    <div class="cart-icon-wrapper">
+                        <i class="fas fa-shopping-bag"></i>
+                        <div id="cart-badge" class="badge">0</div>
+                    </div>
+                    <span class="btn-label">My Shopping Cart</span>
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container main-layout" id="shop-section">
+        <main class="products-grid" id="product-container"></main>
+        <aside class="filters right-sidebar">
+            <div class="filter-card">
+                <div class="filter-section">
+                    <h3><i class="fas fa-layer-group"></i> Categories</h3>
+                    <div class="filter-group">
+                        <label><input type="checkbox" class="category-check" value="Electronics" onchange="applyFilters()"> Electronics</label>
+                        <label><input type="checkbox" class="category-check" value="Fashion" onchange="applyFilters()"> Fashion</label>
+                        <label><input type="checkbox" class="category-check" value="Home" onchange="applyFilters()"> Home Decor</label>
+                    </div>
+                </div>
+                <div class="filter-section">
+                    <h3><i class="fas fa-tags"></i> Price Range</h3>
+                    <div class="price-input">
+                        <input type="range" id="price-slider" min="0" max="1000" value="1000" oninput="updatePriceLabel(this.value)">
+                        <div class="price-labels">
+                            <span>$0</span>
+                            <span id="price-limit" class="limit-tag">$1000</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="clear-btn" onclick="clearFilters()">Reset All</button>
+            </div>
+        </aside>
+    </div>
+
+    <div id="tracking-section" class="container" style="display:none; padding: 50px 5%;">
+        <div class="filter-card" style="max-width: 600px; margin: auto;">
+            <h2 style="color: var(--violet-primary); margin-bottom: 20px;">Track Your Order</h2>
+            <div id="tracking-content">
+                <p><strong>Order ID:</strong> <span id="track-id">#NONE</span></p>
+                <p><strong>Status:</strong> <span id="track-status" style="color:var(--violet-primary); font-weight:bold;">N/A</span></p>
+                <div class="tracking-visual">
+                    <div class="step" id="step-1">Ordered</div>
+                    <div class="step" id="step-2">Shipped</div>
+                    <div class="step" id="step-3">Out for Delivery</div>
+                    <div class="step" id="step-4">Delivered</div>
+                </div>
+            </div>
+            <button class="clear-btn" style="margin-top:30px" onclick="showSection('products')">Back to Shopping</button>
+        </div>
+    </div>
+
+    <div id="admin-panel" class="container" style="display:none; padding: 50px 5%;">
+        <h1 style="color: var(--violet-primary); margin-bottom:20px;">Admin Dashboard</h1>
+        <div class="main-layout" style="align-items: flex-start;">
+            <div class="filter-card" style="flex: 1;">
+                <h3>Manage Orders</h3>
+                <div id="admin-orders-list"></div>
+            </div>
+            <div class="filter-card" style="flex: 1;">
+                <h3>Add Product</h3>
+                <form onsubmit="adminAddProduct(event)">
+                    <input type="text" id="new-p-name" placeholder="Product Name" required style="width:100%; margin-bottom:10px; padding:10px; border-radius:5px; border:1px solid #ddd;">
+                    <input type="number" id="new-p-price" placeholder="Price" required style="width:100%; margin-bottom:10px; padding:10px; border-radius:5px; border:1px solid #ddd;">
+                    <select id="new-p-cat" style="width:100%; margin-bottom:10px; padding:10px; border-radius:5px; border:1px solid #ddd;">
+                        <option value="Electronics">Electronics</option>
+                        <option value="Fashion">Fashion</option>
+                        <option value="Home">Home Decor</option>
+                    </select>
+                    <button type="submit" class="signup-btn" style="width:100%;">Add to Catalog</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="login-modal" class="modal">
+        <div class="modal-content auth-box">
+            <span class="close" onclick="closeModals()">&times;</span>
+            <div class="auth-header"><h2>Login</h2></div>
+            <form class="input-group">
+                <input type="text" placeholder="Email" required>
+                <input type="password" placeholder="Password" required>
+                <button type="submit" class="auth-submit-btn">Sign In</button>
+            </form>
+            <p class="auth-footer">New here? <span onclick="openSignup()">Create account</span></p>
+        </div>
+    </div>
+
+    <div id="signup-modal" class="modal">
+        <div class="modal-content auth-box">
+            <span class="close" onclick="closeModals()">&times;</span>
+            <div class="auth-header"><h2>Sign Up</h2></div>
+            <form onsubmit="handleSignup(event)" class="input-group">
+                <input type="text" id="reg-name" placeholder="Full Name" required>
+                <input type="email" id="reg-email" placeholder="Email" required>
+                <input type="password" placeholder="Password" required>
+                <button type="submit" class="auth-submit-btn">Create Account</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="payment-modal" class="modal">
+        <div class="modal-content auth-box">
+            <span class="close" onclick="closeModals()">&times;</span>
+            <h2>Checkout</h2>
+            <p>Payable: <span id="pay-total">$0</span></p>
+            <div class="payment-tabs">
+                <button class="tab-btn active" onclick="openTab(event, 'card')">Card</button>
+                <button class="tab-btn" onclick="openTab(event, 'upi')">UPI</button>
+            </div>
+            <div id="card" class="tab-content show"><button class="buy-btn" onclick="completePayment()">Pay Now</button></div>
+            <div id="upi" class="tab-content"><p>Scan QR to Pay</p></div>
+        </div>
+    </div>
+
+    <div id="cart-sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h2>Your Cart</h2>
+            <button class="close-cart-btn" onclick="toggleCart()">&times;</button>
+        </div>
+        <div id="cart-items"></div>
+        <div class="cart-footer">
+            <div class="total-container"><span>Total:</span> <span id="cart-total">$0</span></div>
+            <button class="buy-btn" onclick="processCheckout()">Checkout</button>
+        </div>
+    </div>
+
+    <script src="ecom.js"></script>
+</body>
+</html>
